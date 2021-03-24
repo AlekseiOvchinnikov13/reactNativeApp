@@ -3,55 +3,10 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import ContactIcon from '../contactIcon';
 import ContactName from '../contactName';
 import ContactInfo from '../contactInfo';
+import userLogo from '../../assets/img/userIcon.png';
+import {contactsStore} from '../data';
 
 const ContactCard = () => {
-  const contactsStore = [
-    {
-      id: 1,
-      name: 'Name1 Surname1',
-      phone: '010-692-6593 * 09121',
-      address: '53198-4257, South Elvis, Hoeger Mall, Apt. 691',
-      mail: 'post1@yahoo.com',
-      uri: 'https://reactnative.dev/img/tiny_logo.png',
-      isOpen: false,
-    },
-    {
-      id: 2,
-      name: 'Name2 Surname2',
-      phone: '010-692-6593 * 09122',
-      address: '53198-4257, South Elvis, Hoeger Mall, Apt. 692',
-      mail: 'post2@yahoo.com',
-      uri: 'https://reactnative.dev/img/tiny_logo.png',
-      isOpen: false,
-    },
-    {
-      id: 3,
-      name: 'Name3 Surname3',
-      phone: '010-692-6593 * 09123',
-      address: '53198-4257, South Elvis, Hoeger Mall, Apt. 693',
-      mail: 'post3@yahoo.com',
-      uri: 'https://reactnative.dev/img/tiny_logo.png',
-      isOpen: false,
-    },
-    {
-      id: 4,
-      name: 'Name4 Surname4',
-      phone: '010-692-6593 * 09124',
-      address: '53198-4257, South Elvis, Hoeger Mall, Apt. 694',
-      mail: 'post4@yahoo.com',
-      uri: 'https://reactnative.dev/img/tiny_logo.png',
-      isOpen: false,
-    },
-    {
-      id: 5,
-      name: 'Name5 Surname5',
-      phone: '010-692-6593 * 09125',
-      address: '53198-4257, South Elvis, Hoeger Mall, Apt. 695',
-      mail: 'post5@yahoo.com',
-      uri: 'https://reactnative.dev/img/tiny_logo.png',
-      isOpen: false,
-    },
-  ];
   const [contacts, setContacts] = useState(contactsStore);
   const cardPress = id =>
     setContacts([
@@ -67,7 +22,7 @@ const ContactCard = () => {
     <TouchableOpacity onPress={() => cardPress(contact.id)} key={contact.id}>
       <View style={{...styles.cardStyle, height: contact.isOpen ? 194 : 90}}>
         <View style={styles.topWrapper}>
-          <ContactIcon />
+          <ContactIcon imageUri={userLogo} />
           <View style={styles.infoColumn}>
             <ContactName name={contact.name} phone={contact.phone} />
             {contact.isOpen && (

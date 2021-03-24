@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import ContactCard from './components/contactCard';
-import PageTitle from './components/pageTitle';
+import PageTitle from './src/components/pageTitle';
+import ContactCard from './src/components/contactCard';
 
 const App = () => {
   return (
