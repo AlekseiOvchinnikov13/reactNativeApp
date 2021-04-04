@@ -1,18 +1,15 @@
-import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-
-const PageTitle = ({title}) => {
-  return <Text style={styles.pageTitle}>{title}</Text>;
-};
+import React from "react"
+import { StyleSheet, Text } from "react-native"
 
 const styles = StyleSheet.create({
   pageTitle: {
-    fontWeight: '300',
+    fontWeight: "300",
     fontSize: 42,
-    color: '#B0AAAC',
-    marginTop: 25,
-    marginLeft: 30,
-    marginBottom: 45,
-  },
-});
-export default PageTitle;
+    paddingLeft: 10
+  }
+})
+
+const PageTitle = ({ title, isDark }) => <Text style={{ ...styles.pageTitle, color: isDark ? '#fff' : '#000' }}>{title}</Text>
+
+
+export default PageTitle
