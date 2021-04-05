@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import PageTitle from "../pageTitle"
-import PreviousButton from "../previousButton"
+import PageTitle from "../PageTitle"
+import PreviousButton from "../PreviousButton"
 
 const styles = StyleSheet.create({
   headerWrapper: {

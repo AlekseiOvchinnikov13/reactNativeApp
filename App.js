@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { View } from "react-native"
-import TabBar from "./src/components/tabBar"
-import Header from "./src/components/header"
-import ScreenContacts from "./src/components/screenContacts"
-import ScreenLogIn from "./src/components/screenLogIn"
-import ScreenGallery from "./src/components/screenGallery"
+import TabBar from "./src/components/TabBar"
+import Header from "./src/components/Header"
+import ScreenContacts from "./src/components/ScreenContacts"
+import ScreenLogIn from "./src/components/ScreenLogIn"
+import ScreenGallery from "./src/components/ScreenGallery"
 
 
 const App = () => {

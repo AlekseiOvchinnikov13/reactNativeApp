@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, FlatList } from "react-native"
 import albumImg from "../../assets/img/albumImage.png"
-import AlbumCard from "../albumCard"
+import AlbumCard from "../AlbumCard"
 
 const styles = StyleSheet.create({
   root: {

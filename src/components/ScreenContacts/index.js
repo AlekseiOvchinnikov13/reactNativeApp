@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, View, ScrollView } from "react-native"
-import ContactCard from "../contactCard"
+import ContactCard from "../ContactCard"
 
 const styles = StyleSheet.create({
   root: {

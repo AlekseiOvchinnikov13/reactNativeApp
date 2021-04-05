@@ -7,9 +7,9 @@ import {
   UIManager,
   Platform
 } from "react-native"
-import ContactIcon from "../contactIcon"
-import ContactName from "../contactName"
-import ContactInfo from "../contactInfo"
+import ContactIcon from "../СontactIcon"
+import ContactName from "../ContactName"
+import ContactInfo from "../ContactInfo"
 import userLogo from "../../assets/img/userIcon.png"
 import { contactsStore } from "../data"
 
