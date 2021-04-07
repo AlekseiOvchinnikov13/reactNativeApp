@@ -1,23 +1,26 @@
-import React from 'react';
-import {StyleSheet, ImageBackground} from 'react-native';
+import React from "react"
+import { StyleSheet, Image } from "react-native"
 
-const ContactIcon = ({imageUri}) => {
+const ContactIcon = ({ imageUri }) => {
   const imagePlag = {
     uri:
-      'https://backmantitle.com/wp-content/uploads/2019/01/default-avatar.png',
-  };
-  const image = imageUri ? imageUri : imagePlag;
+      "https://backmantitle.com/wp-content/uploads/2019/01/default-avatar.png"
+  }
+  const styles = StyleSheet.create({
+    styleIco: {
+      width: 63,
+      height: 70,
+      borderRadius: 50,
+      flexBasis: "20%",
+      borderWidth: 3,
+      borderColor: '#00ADD3'
+    }
+  })
+  const image = imageUri || imagePlag
 
-  return <ImageBackground source={image} style={styles.styleIco} />;
-};
+  return <Image source={image} style={styles.styleIco} />
+}
 
-const styles = StyleSheet.create({
-  styleIco: {
-    width: 63,
-    height: 63,
-    borderRadius: 50,
-    flexBasis: '20%',
-  },
-});
 
-export default ContactIcon;
+
+export default ContactIcon

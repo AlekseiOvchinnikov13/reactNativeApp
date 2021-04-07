@@ -1,5 +1,6 @@
 import React from "react"
 import { StyleSheet, Image, View, Text } from "react-native"
+import albumImg from "../../assets/img/albumImage.png"
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -41,11 +42,11 @@ const AlbumCard = ({ title, img }) => (
       style={styles.containerStyle}>
       <Image
         style={styles.styleImg}
-        source={img}
+        source={img ? { uri: img } : albumImg}
       />
       <View style={styles.textWrapper}>
         <Text style={styles.textStyle}>Official photo for album</Text>
-        <Text style={styles.LinkTextStyle}>{title}</Text>
+        <Text style={styles.LinkTextStyle}>{`${title.substring(0,15)}...`}</Text>
       </View>
     </View>
   )

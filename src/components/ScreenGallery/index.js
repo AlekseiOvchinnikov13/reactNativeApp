@@ -1,7 +1,7 @@
-import React from "react"
-import { StyleSheet, FlatList } from "react-native"
-import albumImg from "../../assets/img/albumImage.png"
+import React, { useEffect, useState } from "react"
+import { StyleSheet, FlatList, Alert, ActivityIndicator } from "react-native"
 import AlbumCard from "../AlbumCard"
+import { getAlbums } from "../../api"
 
 const styles = StyleSheet.create({
   root: {
@@ -11,47 +11,55 @@ const styles = StyleSheet.create({
   }
 })
 
-const albumData = [
-  {
-    id: 1,
-    photo: albumImg,
-    title: "album 1"
-  },
-  {
-    id: 2,
-    photo: albumImg,
-    title: "album 2"
-  },
-  {
-    id: 3,
-    photo: albumImg,
-    title: "album 3"
-  },
-  {
-    id: 4,
-    photo: albumImg,
-    title: "album 4"
-  },
-  {
-    id: 5,
-    photo: albumImg,
-    title: "album 5"
-  }
-]
-
 const ScreenGallery = () => {
+  const url = 'https://jsonplaceholder.typicode.com/photos?_limit=50'
+  const [albums, setAlbums] = useState([])
+  const [refresh, setRefresh] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  const alertHandler = (error) => {
+    Alert.alert(
+      `${error}`,
+      `Repeat the request?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+          },
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => setRefresh(!refresh)
+        }
+      ],
+      { cancelable: false }
+    )
+  }
+
+  useEffect(() => {
+    getAlbums(url, setAlbums, alertHandler, setLoading, loading)
+  }, [refresh])
+
   const renderItem = ({ item }) => (
     <AlbumCard
       title={item.title}
-      img={item.photo}
+      img={item.url}
     />
   )
 
-
+  if (loading) {
+    return (
+      <ActivityIndicator
+        size="large"
+        color="black"
+        style={styles.preloader}
+      />)
+  }
   return (
     <FlatList
       style={styles.root}
-      data={albumData}
+      data={albums}
       renderItem={renderItem}
       keyExtractor={item => item.id}
     />

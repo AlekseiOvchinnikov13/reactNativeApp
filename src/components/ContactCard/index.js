@@ -1,24 +1,11 @@
-import React, { useState } from "react"
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  LayoutAnimation,
-  UIManager,
-  Platform
-} from "react-native"
+import React from "react"
+import { StyleSheet, View, TouchableOpacity } from "react-native"
 import ContactIcon from "../СontactIcon"
 import ContactName from "../ContactName"
 import ContactInfo from "../ContactInfo"
-import userLogo from "../../assets/img/userIcon.png"
-import { contactsStore } from "../data"
 
-if (
-  Platform.OS === "android" &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true)
-}
+// import { contactsStore } from "../data"
+
 
 const styles = StyleSheet.create({
   cardStyle: {
@@ -39,43 +26,37 @@ const styles = StyleSheet.create({
   },
   infoColumn: {
     flexBasis: "70%"
+  },
+  preloader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 })
 
-const ContactCard = () => {
-  const [contacts, setContacts] = useState(contactsStore)
-  const cardPress = id => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    setContacts([
-      ...contacts.map(item => {
-        if (item.id === id) {
-          item.isOpen = !item.isOpen
-        }
-        return item
-      })
-    ])
-  }
-
-  return contacts.map(contact => (
-    <TouchableOpacity onPress={() => cardPress(contact.id)} key={contact.id}>
-      <View style={{ ...styles.cardStyle, minHeight: contact.isOpen ? 194 : 90 }}>
-        <View style={styles.topWrapper}>
-          <ContactIcon imageUri={userLogo} />
-          <View style={styles.infoColumn}>
-            <ContactName name={contact.name} phone={contact.phone} />
-            {contact.isOpen && (
-              <View style={styles.descriptionWrapper}>
-                <ContactInfo title="address" description={contact.address} />
-                <ContactInfo title="Mail" description={contact.mail} />
-              </View>
-            )}
-          </View>
+const ContactCard = ({ contact, onPress }) =>
+  <TouchableOpacity onPress={() => onPress(contact.id)} key={contact.id}>
+    <View style={{ ...styles.cardStyle, minHeight: contact.isOpen ? 194 : 90 }}>
+      <View style={styles.topWrapper}>
+        <ContactIcon imageUri={{ uri: contact.picture.thumbnail }} />
+        <View style={styles.infoColumn}>
+          <ContactName
+            name={`${contact.name.title} ${contact.name.first} ${contact.name.last}`}
+            phone={contact.phone}
+          />
+          {contact.isOpen && (
+            <View style={styles.descriptionWrapper}>
+              <ContactInfo
+                title="address"
+                description={`${contact.location.street.number} ${contact.location.street.name}, ${contact.location.city}, ${contact.location.country}`}
+              />
+              <ContactInfo title="Mail" description={contact.email} />
+            </View>
+          )}
         </View>
       </View>
-    </TouchableOpacity>
-  ))
-}
-
+    </View>
+  </TouchableOpacity>
 
 
 export default ContactCard
