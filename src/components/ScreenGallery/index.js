@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, FlatList, Alert, ActivityIndicator } from "react-native"
-import AlbumCard from "../AlbumCard"
 import { getAlbums } from "../../api"
+import AlbumCard from "../AlbumCard"
 
 const styles = StyleSheet.create({
   root: {
@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const ScreenGallery = () => {
-  const url = 'https://jsonplaceholder.typicode.com/photos?_limit=50'
+const ScreenGallery = ({ pickerValue }) => {
+  const url = "https://jsonplaceholder.typicode.com/photos?_limit=200"
   const [albums, setAlbums] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -43,7 +43,7 @@ const ScreenGallery = () => {
 
   const renderItem = ({ item }) => (
     <AlbumCard
-      title={item.title}
+      albumNumber={item.albumId}
       img={item.url}
     />
   )
@@ -59,7 +59,7 @@ const ScreenGallery = () => {
   return (
     <FlatList
       style={styles.root}
-      data={albums}
+      data={albums.filter(item => item.albumId === pickerValue)}
       renderItem={renderItem}
       keyExtractor={item => item.id}
     />

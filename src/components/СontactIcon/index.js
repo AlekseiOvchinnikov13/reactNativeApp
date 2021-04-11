@@ -18,7 +18,12 @@ const ContactIcon = ({ imageUri }) => {
   })
   const image = imageUri || imagePlag
 
-  return <Image source={image} style={styles.styleIco} />
+  return (
+      <Image
+        source={image}
+        style={styles.styleIco}
+      />
+  )
 }
 
 

@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Image, View, Text } from "react-native"
 import albumImg from "../../assets/img/albumImage.png"
+import AlbumNumberCircle from "../AlbumNumberCircle"
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -33,11 +34,22 @@ const styles = StyleSheet.create({
   },
   LinkTextStyle:{
     textTransform: 'uppercase',
-    color: '#00ADD3'
+    color: '#00ADD3',
+    marginRight: 5
+  },
+  albumWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  styleCircle:{
+    width: 21,
+    height: 21,
+    paddingTop: 2,
+    fontSize: 13
   }
 })
 
-const AlbumCard = ({ title, img }) => (
+const AlbumCard = ({ albumNumber, img }) => (
     <View
       style={styles.containerStyle}>
       <Image
@@ -46,7 +58,13 @@ const AlbumCard = ({ title, img }) => (
       />
       <View style={styles.textWrapper}>
         <Text style={styles.textStyle}>Official photo for album</Text>
-        <Text style={styles.LinkTextStyle}>{`${title.substring(0,15)}...`}</Text>
+        <View style={styles.albumWrapper}>
+          <Text style={styles.LinkTextStyle}>album</Text>
+          <AlbumNumberCircle
+            pickerValue={albumNumber}
+            styleCircle={styles.styleCircle}
+          />
+        </View>
       </View>
     </View>
   )

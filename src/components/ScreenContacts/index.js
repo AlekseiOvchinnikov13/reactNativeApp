@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export const ScreenContacts = () => {
+const ScreenContacts = () => {
   const url = "https://randomuser.me/api/?results=50"
   const [contacts, setContacts] = useState([])
   const [refresh, setRefresh] = useState(false)
@@ -47,18 +47,6 @@ export const ScreenContacts = () => {
       { cancelable: false }
     )
   }
-
-    /*const asyncHandler = async () => {
-    try {
-      const response = await fetch(url)
-      const users = await response.json()
-      setContacts(users)
-      setLoading(!loading)
-    } catch (error) {
-      alertHandler(error)
-      setLoading(!loading)
-    }
-  }*/
 
   useEffect(() => {
     getContacts(url, setContacts, alertHandler, setLoading, loading)
@@ -92,15 +80,25 @@ export const ScreenContacts = () => {
       />)
   }
 
-
   return (
     <FlatList
       style={styles.root}
       data={contacts}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.name.first + item.name.last}
     />
-
   )
 }
 export default ScreenContacts
+
+/*const asyncHandler = async () => {
+try {
+  const response = await fetch(url)
+  const users = await response.json()
+  setContacts(users)
+  setLoading(!loading)
+} catch (error) {
+  alertHandler(error)
+  setLoading(!loading)
+}
+}*/
