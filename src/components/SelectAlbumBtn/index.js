@@ -16,12 +16,11 @@ const styles = StyleSheet.create({
 })
 
 const SelectAlbumBtn = ({ pickerValue, onPress }) => (
-  <View style={styles.selectWrapperStyle}>
-    <TouchableOpacity onPress={onPress()}>
-      <Text style={styles.selectStyle}>Select album</Text>
-    </TouchableOpacity>
-    <AlbumNumberCircle pickerValue={pickerValue} />
-  </View>
-)
-
+    <View style={styles.selectWrapperStyle}>
+      <TouchableOpacity onPress={onPress}>
+        <Text style={styles.selectStyle}>Select album</Text>
+      </TouchableOpacity>
+      <AlbumNumberCircle pickerValue={pickerValue} />
+    </View>
+  )
 export default SelectAlbumBtn

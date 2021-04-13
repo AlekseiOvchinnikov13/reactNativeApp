@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { StyleSheet, View, TouchableOpacity, Modal, Image, Text } from "react-native"
+import { StyleSheet, View, TouchableOpacity, Modal, Image } from "react-native"
 import ContactIcon from "../СontactIcon"
 import ContactName from "../ContactName"
 import ContactInfo from "../ContactInfo"

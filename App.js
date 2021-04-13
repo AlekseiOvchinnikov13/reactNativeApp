@@ -11,11 +11,11 @@ const App = () => {
   const headers = ["Contacts", "Log In", "Gallery"]
   const [activeScreen, setActiveScreen] = useState(1)
   const [isVisible, setIsVisible] = useState(false)
-  const [pickerValue, pickerValueChange] = useState(1)
+  const [pickerValue, setPickerValue] = useState(1)
 
   const pickerHandler = item => {
-    pickerValueChange(item)
-    setTimeout(() => setIsVisible(!isVisible), 1000)
+    setPickerValue(item)
+    setIsVisible(!isVisible)
   }
 
   return (
@@ -26,7 +26,7 @@ const App = () => {
         setActiveScreen={setActiveScreen}
         isDark={activeScreen === 3}
         pickerValue={pickerValue}
-        setIsVisible={setIsVisible}
+        setIsVisible={() => setIsVisible(!isVisible)}
       />
       {
         activeScreen === 1
@@ -39,7 +39,7 @@ const App = () => {
       }
       <ModalScreen
         isVisible={isVisible}
-        PickerValue={pickerValue}
+        pickerValue={pickerValue}
         pickerHandler={pickerHandler}
       />
       {activeScreen !== 2 &&
