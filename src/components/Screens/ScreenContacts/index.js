@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react"
-import { StyleSheet, FlatList, Alert, LayoutAnimation, ActivityIndicator, Platform, UIManager } from "react-native"
-import ContactCard from "../ContactCard"
-import { getContacts } from "../../api"
+import {
+  StyleSheet,
+  FlatList,
+  Alert,
+  LayoutAnimation,
+  ActivityIndicator,
+  Platform,
+  UIManager,
+  View
+} from "react-native"
+import ContactCard from "../../ContactCard"
+import { getContacts } from "../../../api"
+import Header from "../../Header"
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1
+  },
+  rootView: {
     flex: 1
   },
   cardsWrapper: {
@@ -16,7 +29,7 @@ const styles = StyleSheet.create({
 })
 
 const ScreenContacts = () => {
-  const url = "https://randomuser.me/api/?results=50"
+  const url = "https://randomuser.me/api/?results=20"
   const [contacts, setContacts] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -47,11 +60,6 @@ const ScreenContacts = () => {
       { cancelable: false }
     )
   }
-
-  useEffect(() => {
-    getContacts(url, setContacts, alertHandler, setLoading, loading)
-  }, [refresh])
-
   const cardPress = id => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setContacts([
@@ -63,13 +71,16 @@ const ScreenContacts = () => {
       })
     ])
   }
-
   const renderItem = ({ item }) => (
     <ContactCard
       contact={item}
       onPress={cardPress}
     />
   )
+
+  useEffect(() => {
+    getContacts(url, setContacts, alertHandler, setLoading, loading)
+  }, [refresh])
 
   if (loading) {
     return (
@@ -81,12 +92,17 @@ const ScreenContacts = () => {
   }
 
   return (
-    <FlatList
-      style={styles.root}
-      data={contacts}
-      renderItem={renderItem}
-      keyExtractor={item => item.name.first + item.name.last}
-    />
+    <View style={styles.rootView}>
+      <Header
+        title="Contacts"
+      />
+      <FlatList
+        style={styles.root}
+        data={contacts}
+        renderItem={renderItem}
+        keyExtractor={item => item.name.first + item.name.last}
+      />
+    </View>
   )
 }
 export default ScreenContacts

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 const PreviousButton = ({ onPress, styleBtn }) => (
   <TouchableOpacity
     style={{ ...styles.buttonStyle, ...styleBtn }}
-    onPress={() => onPress(1)}>
+    onPress={onPress}>
     <Image
       style={styles.iconStyle}
       source={prevArrow} />

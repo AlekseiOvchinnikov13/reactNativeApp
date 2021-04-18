@@ -23,18 +23,22 @@ const styles = StyleSheet.create({
   }
 })
 
-const screenStings = ["Screen 1", "Screen 2", "Screen 3"]
-
-const TabBar = ({ setActiveScreen, isDark }) => (
+const TabBar = ({ isDark, navigation, state }) => (
   <View style={{ ...styles.root, backgroundColor: isDark ? "rgba(255, 255, 255, .9)" : "rgba(0, 0, 0, .7)" }}>
-    {screenStings.map((item, index) =>
-      <TouchableOpacity
-        key={item}
-        onPress={() => setActiveScreen(index + 1)}
-      >
-        <Text style={{ ...styles.headerText, color: isDark ? "#000" : "#fff" }}>{item.toUpperCase()}</Text>
-      </TouchableOpacity>
-    )}
+    {state?.routes
+      .filter(item => item.name !== "Gallery")
+      .map(item =>
+        <TouchableOpacity
+          key={item}
+          onPress={() => navigation.navigate(item.name)}
+        >
+          <Text
+            style={{ ...styles.headerText, color: isDark ? "#000" : "#fff" }}
+          >
+            {item.name.toUpperCase()}
+          </Text>
+        </TouchableOpacity>
+      )}
   </View>
 )
 

@@ -1,5 +1,6 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 import PageTitle from "../PageTitle"
 import PreviousButton from "../PreviousButton"
 import SelectAlbumBtn from "../SelectAlbumBtn"
@@ -20,18 +21,22 @@ const styles = StyleSheet.create({
   }
 })
 
-const Header = ({ titlesArray, activeScreen, setActiveScreen, isDark, pickerValue, setIsVisible }) => (
-  <View style={{ ...styles.headerWrapper, backgroundColor: isDark ? "#000" : "#fff" }}>
-    <View style={styles.titleWrapper}>
-      {activeScreen === 2 && <PreviousButton onPress={setActiveScreen} />}
-      <PageTitle title={titlesArray[activeScreen - 1]} isDark={isDark} />
+const Header = ({ title, isDark, pickerValue, setIsVisible, isNeedPrevBtn, isNeedAlbums }) => {
+  const navigation = useNavigation()
+
+  return (
+    <View style={{ ...styles.headerWrapper, backgroundColor: isDark ? "#000" : "#fff" }}>
+      <View style={styles.titleWrapper}>
+        {isNeedPrevBtn && <PreviousButton onPress={() => navigation.goBack()} />}
+        <PageTitle title={title} isDark={isDark} />
+      </View>
+      {isNeedAlbums &&
+      <SelectAlbumBtn
+        pickerValue={pickerValue}
+        onPress={setIsVisible}
+      />}
     </View>
-    {activeScreen === 3 &&
-    <SelectAlbumBtn
-      pickerValue={pickerValue}
-      onPress={setIsVisible}
-    />}
-  </View>
-)
+  )
+}
 
 export default Header
