@@ -7,19 +7,28 @@ import ScreenContacts from "../components/Screens/ScreenContacts"
 import ScreenLogIn from "../components/Screens/ScreenLogIn"
 import ScreenGallery from "../components/Screens/ScreenGallery"
 
-
 const RootStack = createStackNavigator()
+const SecureStack = createStackNavigator()
 const Tabs = createBottomTabNavigator()
+
+const SecureScreen = () => (
+  <SecureStack.Navigator
+    headerMode="none"
+    initialRouteName="Log In"
+  >
+    <RootStack.Screen name="Log In" component={ScreenLogIn} />
+    <RootStack.Screen name="Gallery" component={ScreenGallery} />
+  </SecureStack.Navigator>
+)
 
 const TabScreens = () => (
   <Tabs.Navigator
     headerMode="none"
     initialRouteName="Contacts"
-    tabBar={({ navigation, state }) => <TabBar {...{ navigation, state }} />}
+    tabBar={({ navigation, state, descriptors }) => <TabBar {...{ navigation, state, descriptors }} />}
   >
     <RootStack.Screen name="Contacts" component={ScreenContacts} />
-    <RootStack.Screen name="Log In" component={ScreenLogIn} />
-    <RootStack.Screen name="Gallery" component={ScreenGallery} />
+    <RootStack.Screen name="Log In" component={SecureScreen} />
   </Tabs.Navigator>
 )
 

@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { StyleSheet, TextInput, TouchableOpacity, Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
+import * as Animatable from "react-native-animatable"
 import Header from "../../Header"
 
 const styles = StyleSheet.create({
@@ -24,8 +25,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#c0c1c1",
     borderRadius: 15,
-    width: "90%",
-    paddingLeft: 25
+    width: "100%",
+    paddingLeft: 25,
+    marginTop: 20
   },
   submitStyle: {
     borderRadius: 20,
@@ -45,11 +47,25 @@ const styles = StyleSheet.create({
 const ScreenLogIn = () => {
   const [login, setLogin] = useState("")
   const [password, setPassword] = useState("")
+  const [animationTrigger, setAnimationTrigger] = useState(false)
   const navigation = useNavigation()
+  const animateRef = useRef(null)
 
   const onSubmit = () => {
-    login && password && navigation.navigate("Gallery")
+    if (login.length < 1) {
+      setAnimationTrigger(!animationTrigger)
+      return null
+    }
+    if (password.length < 1) {
+      setAnimationTrigger(!animationTrigger)
+      return null
+    }
+    navigation.navigate("Gallery")
   }
+
+  useEffect(()=>{
+    animateRef.current.animate("swing", 500)
+  }, [animationTrigger])
 
   return (
     <View style={styles.rootView}>
@@ -59,19 +75,24 @@ const ScreenLogIn = () => {
       />
       <View style={styles.root}>
         <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Enter your Login"
-            value={login}
-            onChangeText={setLogin}
-          />
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Enter your Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <Animatable.View
+            style={{ width:"90%" }}
+            ref={animateRef}
+          >
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Enter your Login"
+              value={login}
+              onChangeText={setLogin}
+            />
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Enter your Password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </Animatable.View>
         </View>
         <TouchableOpacity
           style={styles.submitStyle}

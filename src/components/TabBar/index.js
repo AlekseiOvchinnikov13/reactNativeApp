@@ -23,23 +23,26 @@ const styles = StyleSheet.create({
   }
 })
 
-const TabBar = ({ isDark, navigation, state }) => (
-  <View style={{ ...styles.root, backgroundColor: isDark ? "rgba(255, 255, 255, .9)" : "rgba(0, 0, 0, .7)" }}>
-    {state?.routes
-      .filter(item => item.name !== "Gallery")
-      .map(item =>
-        <TouchableOpacity
-          key={item}
-          onPress={() => navigation.navigate(item.name)}
-        >
-          <Text
-            style={{ ...styles.headerText, color: isDark ? "#000" : "#fff" }}
+const TabBar = ({ isDark, navigation, state }) => {
+  if (state?.index === 1) return null
+
+  return (
+    <View style={{ ...styles.root, backgroundColor: isDark ? "rgba(255, 255, 255, .9)" : "rgba(0, 0, 0, .7)" }}>
+      {state?.routes
+        .map(item =>
+          <TouchableOpacity
+            key={item}
+            onPress={() => navigation.navigate(item.name)}
           >
-            {item.name.toUpperCase()}
-          </Text>
-        </TouchableOpacity>
-      )}
-  </View>
-)
+            <Text
+              style={{ ...styles.headerText, color: isDark ? "#000" : "#fff" }}
+            >
+              {item.name.toUpperCase()}
+            </Text>
+          </TouchableOpacity>
+        )}
+    </View>
+  )
+}
 
 export default TabBar

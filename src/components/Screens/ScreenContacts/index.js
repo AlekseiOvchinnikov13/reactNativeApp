@@ -17,19 +17,24 @@ const styles = StyleSheet.create({
   root: {
     flex: 1
   },
+  rootChild: {
+    alignItems: "center"
+  },
   rootView: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#fff"
   },
   cardsWrapper: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
+    width: "90%"
   }
 })
 
 const ScreenContacts = () => {
-  const url = "https://randomuser.me/api/?results=20"
+  const url = "https://randomuser.me/api/?results=50"
   const [contacts, setContacts] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -98,6 +103,7 @@ const ScreenContacts = () => {
       />
       <FlatList
         style={styles.root}
+        contentContainerStyle={styles.rootChild}
         data={contacts}
         renderItem={renderItem}
         keyExtractor={item => item.name.first + item.name.last}
