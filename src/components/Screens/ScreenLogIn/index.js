@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { StyleSheet, TextInput, TouchableOpacity, Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import * as Animatable from "react-native-animatable"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import Header from "../../Header"
 
 const styles = StyleSheet.create({
@@ -51,7 +52,16 @@ const ScreenLogIn = () => {
   const navigation = useNavigation()
   const animateRef = useRef(null)
 
-  const onSubmit = () => {
+  const saveToStorage = async value => {
+    try {
+      await AsyncStorage.setItem("AUTHORIZED", value)
+    } catch (er) {
+      // eslint-disable-next-line no-console
+      console.log(er)
+    }
+  }
+
+  const onSubmit = async () => {
     if (login.length < 1) {
       setAnimationTrigger(!animationTrigger)
       return null
@@ -60,10 +70,11 @@ const ScreenLogIn = () => {
       setAnimationTrigger(!animationTrigger)
       return null
     }
+    await saveToStorage('true')
     navigation.navigate("Gallery")
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     animateRef.current.animate("swing", 500)
   }, [animationTrigger])
 
@@ -76,7 +87,7 @@ const ScreenLogIn = () => {
       <View style={styles.root}>
         <View style={styles.inputWrapper}>
           <Animatable.View
-            style={{ width:"90%" }}
+            style={{ width: "90%" }}
             ref={animateRef}
           >
             <TextInput

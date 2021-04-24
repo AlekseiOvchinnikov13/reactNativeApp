@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useAppState } from "@react-native-community/hooks"
 
 const styles = StyleSheet.create({
   root: {
@@ -24,6 +26,44 @@ const styles = StyleSheet.create({
 })
 
 const TabBar = ({ isDark, navigation, state }) => {
+  const [isAuthorized, setAuthorized] = useState(false)
+  const currentAppState = useAppState()
+
+  const clearStorage = async () => {
+    try {
+      await AsyncStorage.removeItem("AUTHORIZED")
+    } catch (er) {
+      // eslint-disable-next-line no-console
+      console.log(er)
+    }
+  }
+
+  const getFromStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("AUTHORIZED")
+      setAuthorized(!!value)
+    } catch (er) {
+      // eslint-disable-next-line no-console
+      console.log(er)
+    }
+  }
+
+  useEffect(() => {
+    if (currentAppState === "background")
+      clearStorage()
+  }, [currentAppState])
+
+  useEffect(() => {
+    getFromStorage()
+  })
+
+  const navigateHandle = item => {
+    if (isAuthorized && item.name === "Log In")
+      navigation.navigate("Log In", { screen: "Gallery" })
+    if (!isAuthorized)
+      navigation.navigate(item.name)
+  }
+
   if (state?.index === 1) return null
 
   return (
@@ -32,7 +72,7 @@ const TabBar = ({ isDark, navigation, state }) => {
         .map(item =>
           <TouchableOpacity
             key={item}
-            onPress={() => navigation.navigate(item.name)}
+            onPress={() => navigateHandle(item)}
           >
             <Text
               style={{ ...styles.headerText, color: isDark ? "#000" : "#fff" }}

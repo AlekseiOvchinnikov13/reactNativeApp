@@ -76,6 +76,7 @@ const ScreenGallery = () => {
         setIsVisible={() => setIsVisible(!isVisible)}
         isNeedAlbums
         isDark
+        isNeedPrevBtn
       />
       <ModalScreen
         isVisible={isVisible}
