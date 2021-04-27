@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { StyleSheet, View, TouchableOpacity, Modal, Image } from "react-native"
+import { StyleSheet, View, TouchableOpacity } from "react-native"
 import ContactIcon from "../СontactIcon"
 import ContactName from "../ContactName"
 import ContactInfo from "../ContactInfo"
-import PreviousButton from "../PreviousButton"
+import ModalContact from "../Screens/ModalContact"
 // import { contactsStore } from "../data"
 
 const styles = StyleSheet.create({
@@ -30,41 +30,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  modalStyle:{
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    bottom: 0,
-    top: 0
-  },
-  modalWrapperStyle: {
-    width: '100%',
-    height: '60%',
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between",
-    position: 'relative'
-  },
-  stylePhoto: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 10
-  },
-  stylePrevBtn:{
-    position: 'absolute',
-    left: 5,
-    top: 5,
-    zIndex: 99
   }
 })
 
-const ContactCard = ({ contact, onPress }) => {
+const ContactCard = ({ contact, onPress, usersCount, setUserIndex, userIndex }) => {
   const [isVisiblePhoto, setIsVisiblePhoto] = useState(false)
-  const openPhoto = () => setIsVisiblePhoto(true)
+  const openPhoto = () => {
+    setIsVisiblePhoto(true)
+    setUserIndex(1) //contact.id
+  }
+
+  const swipeLeft = () => {
+    console.log(userIndex)
+    usersCount - 1 > userIndex
+      ? setUserIndex(userIndex + 1)
+      : setUserIndex(0)
+  }
+  const swipeRight = () => {
+    console.log(userIndex)
+    userIndex - 1 < 0
+      ? setUserIndex(usersCount - 1)
+      : setUserIndex(userIndex - 1)
+  }
 
   return (
-    <TouchableOpacity onPress={() => onPress(contact.id)} key={contact.id}>
+    <TouchableOpacity onPress={() => onPress(contact.id)}>
       <View style={{ ...styles.cardStyle, minHeight: contact.isOpen ? 194 : 90 }}>
         <View style={styles.topWrapper}>
           <TouchableOpacity onPress={openPhoto}>
@@ -87,23 +77,13 @@ const ContactCard = ({ contact, onPress }) => {
           </View>
         </View>
       </View>
-      <Modal
-        animationType="fade"
-        visible={isVisiblePhoto}
-        transparent
-        style={styles.modalStyle}
-      >
-        <View style={styles.modalWrapperStyle}>
-          <PreviousButton
-            onPress={setIsVisiblePhoto}
-            styleBtn={styles.stylePrevBtn}
-          />
-          <Image
-            style={styles.stylePhoto}
-            source={{ uri: contact.picture.large }}
-          />
-        </View>
-      </Modal>
+      <ModalContact
+        isVisiblePhoto={isVisiblePhoto}
+        setIsVisiblePhoto={setIsVisiblePhoto}
+        contact={contact}
+        swipeLeft={swipeLeft}
+        swipeRight={swipeRight}
+      />
     </TouchableOpacity>
   )
 }

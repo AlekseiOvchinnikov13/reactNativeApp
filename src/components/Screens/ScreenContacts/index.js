@@ -34,10 +34,12 @@ const styles = StyleSheet.create({
 })
 
 const ScreenContacts = () => {
-  const url = "https://randomuser.me/api/?results=50"
+  const usersCount = 5
+  const url = `https://randomuser.me/api/?results=${usersCount}`
   const [contacts, setContacts] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [userIndex, setUserIndex] = useState(null)
 
   if (
     Platform.OS === "android" &&
@@ -80,6 +82,9 @@ const ScreenContacts = () => {
     <ContactCard
       contact={item}
       onPress={cardPress}
+      usersCount={usersCount}
+      userIndex={userIndex}
+      setUserIndex={setUserIndex}
     />
   )
 

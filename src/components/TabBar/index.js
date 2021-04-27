@@ -71,7 +71,7 @@ const TabBar = ({ isDark, navigation, state }) => {
       {state?.routes
         .map(item =>
           <TouchableOpacity
-            key={item}
+            key={item.name}
             onPress={() => navigateHandle(item)}
           >
             <Text
